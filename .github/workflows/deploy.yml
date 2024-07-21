@@ -27,6 +27,7 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
           SCRIPT_BEFORE: |
+            apt update
             apt install default-jre
           SCRIPT_AFTER: |
             whoami
