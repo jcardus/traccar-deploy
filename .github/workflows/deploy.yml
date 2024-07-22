@@ -17,21 +17,25 @@ jobs:
           java-version: 17
           cache: gradle
       - run: ./gradlew build --no-daemon
+      - name: Build installers
+        working-directory: ./setup
+        run: |
+          wget -q http://files.jrsoftware.org/is/5/isetup-5.5.6.exe
+          wget -q https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2+13/OpenJDK21U-jdk_x64_linux_hotspot_21.0.2_13.tar.gz
+          ./package.sh linux
       - name: ssh deploy
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-rlgoDzvc -i"
-          SOURCE: "target/"
+          SOURCE: "setup/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
-          SCRIPT_BEFORE: |
-            apt update
-            apt install -y default-jdk
           SCRIPT_AFTER: |
-            whoami
-            ls -al
+            unzip traccar-linux-*.zip && ./traccar.run
+            cp -v /root/traccar.xml /opt/traccar/conf/
+            service traccar start
             echo $RSYNC_STDOUT
             
       
