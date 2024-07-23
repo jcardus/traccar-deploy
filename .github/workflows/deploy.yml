@@ -43,10 +43,13 @@ jobs:
           mv traccar.xml deploy
       - uses: actions/checkout@v4
         with:
-          path: ./configuration
+          path: configuration
       - run: | 
-          rm -rf ./configuration/.git  
-          cp -rv ./configuration/* ./setup/deploy
+          rm -rf configuration/.git  
+          sed -i "s/\${SMTP_PASSWORD}/${{secrets.SMTP_PASSWORD}}/g" configuration/traccar.xml
+          sed -i "s/\${SMTP_USER_NAME}/${{secrets.SMTP_USER_NAME}}/g" configuration/traccar.xml
+          cp -rv configuration/* setup/deploy
+          
       - name: ssh deploy
         uses: easingthemes/ssh-deploy@main
         with:
@@ -61,6 +64,3 @@ jobs:
             cp -v /home/root/deploy/traccar.xml /opt/traccar/conf/
             service traccar start
             echo $RSYNC_STDOUT
-            
-      
-    
