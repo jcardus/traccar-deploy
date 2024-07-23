@@ -4,10 +4,10 @@
 
     <!-- Documentation: https://www.traccar.org/configuration-file/ -->
 
-    <entry key='database.driver'>org.h2.Driver</entry>
-    <entry key='database.url'>jdbc:h2:./data/database</entry>
-    <entry key='database.user'>sa</entry>
-    <entry key='database.password'></entry>
+    <entry key='database.driver'>com.mysql.cj.jdbc.Driver</entry>
+    <entry key='database.url'>jdbc:mysql://${DATABASE_HOST}/traccar?zeroDateTimeBehavior=round&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;allowMultiQueries=true&amp;autoReconnect=true&amp;useUnicode=yes&amp;characterEncoding=UTF-8&amp;sessionVariables=sql_mode=''</entry>
+    <entry key='database.user'>${DATABASE_USER}</entry>
+    <entry key='database.password'>${DATABASE_PASSWORD}</entry>
 
     <entry key='mail.smtp.host'>email-smtp.sa-east-1.amazonaws.com</entry>
     <entry key='mail.smtp.username'>${SMTP_USER_NAME}</entry>
@@ -16,5 +16,5 @@
     <entry key='mail.smtp.port'>2587</entry>
     
     <entry key='web.port'>80</entry>
-
+  
 </properties>
