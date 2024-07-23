@@ -41,6 +41,10 @@ jobs:
           mkdir deploy
           mv traccar.run deploy
           mv traccar.xml deploy
+      - uses: actions/checkout@v4
+        with:
+          path: ./setup/deploy
+
       - name: ssh deploy
         uses: easingthemes/ssh-deploy@main
         with:
