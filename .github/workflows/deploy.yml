@@ -48,6 +48,7 @@ jobs:
           sed -i "s/\${DATABASE_HOST}/${{secrets.DATABASE_HOST}}/g" configuration/traccar.xml
           sed -i "s/\${DATABASE_PASSWORD}/${{secrets.DATABASE_PASSWORD}}/g" configuration/traccar.xml
           sed -i "s/\${DATABASE_USER}/${{secrets.DATABASE_USER}}/g" configuration/traccar.xml
+          sed -i "s/\${DATABASE_USER}/${{secrets.SMS_HTTP_AUTHORIZATION}}/g" configuration/traccar.xml
           cp -rv configuration/* setup/deploy
           
       - name: ssh deploy
