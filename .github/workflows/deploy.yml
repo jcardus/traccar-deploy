@@ -46,6 +46,7 @@ jobs:
           rm -rf configuration/.git  
           sed -i "s/\${SMTP_PASSWORD}/${{secrets.SMTP_PASSWORD}}/g" configuration/traccar.xml
           sed -i "s/\${SMTP_USER_NAME}/${{secrets.SMTP_USER_NAME}}/g" configuration/traccar.xml
+          sed -i "s/\${MAIL_SMTP_FROM}/${{secrets.MAIL_SMTP_FROM}}/g" configuration/traccar.xml
           cp -rv configuration/* setup/deploy
           
       - name: ssh deploy
