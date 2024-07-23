@@ -11,6 +11,7 @@
 
     <entry key='mail.smtp.host'>email-smtp.sa-east-1.amazonaws.com</entry>
     <entry key='mail.smtp.starttls.enable'>true</entry>
+    <entry key='mail.smtp.starttls.required'>true</entry>
     <entry key='mail.smtp.username'>${SMTP_USER_NAME}</entry>
     <entry key='mail.smtp.password'>${SMTP_PASSWORD}</entry>
     <entry key='mail.smtp.from'>${MAIL_SMTP_FROM}</entry>
