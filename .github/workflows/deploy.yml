@@ -20,10 +20,6 @@ jobs:
       - name: Build installers
         working-directory: ./setup
         run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-          sudo apt-get install libgcc-s1:i386 libstdc++6:i386
-          sudo apt-get install innoextract makeself wine32
           sudo apt-get install makeself
           wget -q https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2+13/OpenJDK21U-jdk_x64_linux_hotspot_21.0.2_13.tar.gz
           mkdir -p out/{conf,data,lib,logs,web,schema,templates}
