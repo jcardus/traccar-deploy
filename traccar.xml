@@ -9,7 +9,7 @@
     <entry key='database.user'>${DATABASE_USER}</entry>
     <entry key='database.password'>${DATABASE_PASSWORD}</entry>
 
-    <entry key='mail.smtp.host'>email-smtp.sa-east-1.amazonaws.com</entry>
+    <entry key='mail.smtp.host'>email-smtp.us-east-1.amazonaws.com</entry>
     <entry key='mail.smtp.username'>${SMTP_USER_NAME}</entry>
     <entry key='mail.smtp.password'>${SMTP_PASSWORD}</entry>
     <entry key='mail.smtp.from'>${MAIL_SMTP_FROM}</entry>
