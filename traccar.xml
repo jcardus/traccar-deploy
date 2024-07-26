@@ -27,4 +27,7 @@
     }
     </entry>
 
+    <entry key='geocoder.type'>mapbox</entry>
+    <entry key='geocoder.key'>${GEOCODER_KEY}</entry>
+    
 </properties>
