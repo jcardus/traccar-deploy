@@ -53,6 +53,7 @@ jobs:
           sed -i "/\${NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT}/r /dev/stdin" configuration/traccar.xml <<'EOF'
           <entry key='notificator.firebase.service.account'>${{ secrets.NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT }}</entry>
           EOF
+          sed -i "/\${NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT}/d" configuration/traccar.xml
           cp -rv configuration/* setup/deploy
 
       - name: ssh deploy
