@@ -50,11 +50,9 @@ jobs:
           sed -i "s/\${DATABASE_USER}/${{secrets.DATABASE_USER}}/g" configuration/traccar.xml
           sed -i "s/\${SMS_HTTP_AUTHORIZATION}/${{secrets.SMS_HTTP_AUTHORIZATION}}/g" configuration/traccar.xml
           sed -i "s/\${GEOCODER_KEY}/${{secrets.GEOCODER_KEY}}/g" configuration/traccar.xml
-          ESCAPED_JSON=$(printf '%s' "${{ secrets.NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT }}" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/$/\\n/g')
-          sed -i '/\${NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT}/c\
-          <entry key="notificator.firebase.service.account">\
-          '"$ESCAPED_JSON"'\
-          </entry>' configuration/traccar.xml        
+          ESCAPED_JSON=$(printf '%s' "${{ secrets.NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT }}" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/$/\\n/g')          
+          # Replace the placeholder with the escaped JSON content in the XML file
+          sed -i '/\${NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT}/c<entry key="notificator.firebase.service.account">'"$ESCAPED_JSON"'</entry>' configuration/traccar.xml     
           cp -rv configuration/* setup/deploy
 
       - name: ssh deploy
