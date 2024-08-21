@@ -18,8 +18,6 @@
     <entry key='web.port'>80</entry>
 
     <entry key='notificator.types'>web,mail,sms,traccar</entry>
-    <entry key='notificator.traccar.key'>eyJkYXRhIjoxNTMyOX0ueHVQamZrWlpvMmNsRGZKMy9TdzFJeDY2aSttcVNWNWlyZmNNVzc1RjZucw</entry>
-
     <entry key='sms.http.url'>https://us-central1-traccar-smsgateway.cloudfunctions.net/sendSms</entry>
     <entry key='sms.http.authorization'>${SMS_HTTP_AUTHORIZATION}</entry>
     <entry key='sms.http.template'>
@@ -31,5 +29,7 @@
 
     <entry key='geocoder.type'>mapbox</entry>
     <entry key='geocoder.key'>${GEOCODER_KEY}</entry>
+
+    <entry key='filter.zero'>true</entry>
 
 </properties>
