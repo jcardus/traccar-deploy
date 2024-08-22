@@ -34,4 +34,6 @@
 
     <entry key='filter.zero'>true</entry>
 
+    <entry key='web.persistSession'>true</entry>
+
 </properties>
