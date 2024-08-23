@@ -20,7 +20,7 @@
 
     <entry key='notificator.types'>web,mail,sms,firebase</entry>
     <entry key='notificator.firebase.serviceAccount'>${NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT}</entry>
-    <entry key='sms.http.url'>https://us-central1-traccar-smsgateway.cloudfunctions.net/sendSms</entry>
+    <entry key='sms.http.url'>https://push-tvq2s7swmq-uc.a.run.app</entry>
     <entry key='sms.http.authorization'>${SMS_HTTP_AUTHORIZATION}</entry>
     <entry key='sms.http.template'>
     {
