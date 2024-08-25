@@ -32,7 +32,7 @@
     <entry key='geocoder.type'>mapbox</entry>
     <entry key='geocoder.key'>${GEOCODER_KEY}</entry>
 
-    <entry key='filter.zero'>true</entry>
+    <entry key='filter.zero'>false</entry>
 
     <entry key='web.persistSession'>true</entry>
     
