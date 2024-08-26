@@ -67,7 +67,7 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
           SCRIPT_AFTER: |
-            /home/${{ secrets.REMOTE_USER }}/deploy/traccar.run
-            cp -v /home/${{ secrets.REMOTE_USER }}/deploy/traccar.xml /opt/traccar/conf/
-            service traccar start
+            sudo /home/${{ secrets.REMOTE_USER }}/deploy/traccar.run
+            sudo cp -v /home/${{ secrets.REMOTE_USER }}/deploy/traccar.xml /opt/traccar/conf/
+            sudo service traccar start
             echo $RSYNC_STDOUT
