@@ -56,6 +56,7 @@ jobs:
           EOF
           sed -i "/\${NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT}/d" configuration/traccar.xml
           cp -rv configuration/* setup/deploy
+          cat configuration/traccar.xml
 
       - name: ssh deploy
         uses: easingthemes/ssh-deploy@main
