@@ -4,7 +4,7 @@
 
     <!-- Documentation: https://www.traccar.org/configuration-file/ -->
 
-    entry key='database.driver'>org.postgresql.Driver</entry>
+    <entry key='database.driver'>org.postgresql.Driver</entry>
     <entry key='database.url'>jdbc:postgresql://${DATABASE_HOST}/traccar?sslmode=require</entry>
     <entry key='database.user'>${DATABASE_USER}</entry>
     <entry key='database.password'>${DATABASE_PASSWORD}</entry>
