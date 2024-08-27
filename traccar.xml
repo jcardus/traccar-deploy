@@ -4,8 +4,8 @@
 
     <!-- Documentation: https://www.traccar.org/configuration-file/ -->
 
-    <entry key='database.driver'>com.mysql.cj.jdbc.Driver</entry>
-    <entry key='database.url'>jdbc:mysql://${DATABASE_HOST}/traccar?zeroDateTimeBehavior=round&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;allowMultiQueries=true&amp;autoReconnect=true&amp;useUnicode=yes&amp;characterEncoding=UTF-8&amp;sessionVariables=sql_mode=''</entry>
+    entry key='database.driver'>org.postgresql.Driver</entry>
+    <entry key='database.url'>jdbc:postgresql://${DATABASE_HOST}/traccar?sslmode=require</entry>
     <entry key='database.user'>${DATABASE_USER}</entry>
     <entry key='database.password'>${DATABASE_PASSWORD}</entry>
     <entry key='database.changelog'></entry>
