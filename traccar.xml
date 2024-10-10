@@ -41,5 +41,5 @@
     <entry key='geolocation.processInvalidPositions'>true</entry>
     <entry key='geolocation.key'>${GEOLOCATION_KEY}</entry>
 
-
+    <entry key="report.fastThreshold">864000</entry>
 </properties>
