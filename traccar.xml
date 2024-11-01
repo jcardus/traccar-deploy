@@ -31,6 +31,7 @@
 
     <entry key='geocoder.type'>mapbox</entry>
     <entry key='geocoder.key'>${GEOCODER_KEY}</entry>
+    <entry key='geocoder.format'>%f</entry>
 
     <entry key='filter.zero'>true</entry>
 
