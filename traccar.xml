@@ -43,4 +43,6 @@
     <entry key='geolocation.key'>${GEOLOCATION_KEY}</entry>
 
     <entry key="report.fastThreshold">864000</entry>
+    
+    <entry key="forward.url">https://bs3tgeskxql6jfi5hecuyrnjwi0mupig.lambda-url.us-east-1.on.aws</entry>
 </properties>
