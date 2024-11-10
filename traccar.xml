@@ -43,6 +43,7 @@
     <entry key='geolocation.key'>${GEOLOCATION_KEY}</entry>
 
     <entry key="report.fastThreshold">864000</entry>
+    <entry key="report.trip.useIgnition">true</entry>
     
     <entry key="event.forward.url">https://pt.frotaweb.com</entry>
     <entry key="event.forward.type">json</entry>
