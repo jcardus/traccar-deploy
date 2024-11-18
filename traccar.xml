@@ -45,7 +45,9 @@
 
     <entry key="report.fastThreshold">864000</entry>
     <entry key="report.trip.useIgnition">true</entry>
-    
-    <entry key="event.forward.url">https://pt.frotaweb.com</entry>
+
+    <entry key="forward.url">http://localhost:300</entry>
+    <entry key="forward.type">json</entry>
+    <entry key="event.forward.url">http://localhost:300</entry>
     <entry key="event.forward.type">json</entry>
 </properties>
