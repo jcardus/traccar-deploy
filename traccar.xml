@@ -34,6 +34,7 @@
     <entry key='geocoder.format'>%f</entry>
 
     <entry key='filter.zero'>true</entry>
+    <entry key='filter.future'>300</entry>
 
     <entry key='web.persistSession'>true</entry>
     
