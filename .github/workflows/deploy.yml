@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: 'jcardus/traccar'
+          repository: 'traccar/traccar'
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
