@@ -10,7 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: 'traccar/traccar'
+          repository: 'jcardus/traccar'
+          ref: 'decode-hours-in-nt20'
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
