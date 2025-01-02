@@ -51,4 +51,6 @@
     <entry key="forward.type">json</entry>
     <entry key="event.forward.url">http://localhost:3000</entry>
     <entry key="event.forward.type">json</entry>
+
+    <entry key="processing.copyAttributes.enable">true</entry>
 </properties>
