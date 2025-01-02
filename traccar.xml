@@ -53,4 +53,5 @@
     <entry key="event.forward.type">json</entry>
 
     <entry key="processing.copyAttributes.enable">true</entry>
+    <entry key="processing.copyAttributes">blocked</entry>
 </properties>
