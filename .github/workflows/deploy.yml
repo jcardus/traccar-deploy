@@ -11,19 +11,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: 'traccar/traccar'
-          ref: 'master'
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-          cache: gradle
-      - run: ./gradlew build --no-daemon
+          ref: 'master'      
       - uses: actions/checkout@v4
         with:
           path: configuration
       - run: |
           rm -rf configuration/.git  
           rsync -r configuration/templates ../templates
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      - run: ./gradlew build --no-daemon
       - name: Build installers
         working-directory: ./setup
         run: |
