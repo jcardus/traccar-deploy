@@ -18,6 +18,12 @@ jobs:
           java-version: 21
           cache: gradle
       - run: ./gradlew build --no-daemon
+      - uses: actions/checkout@v4
+        with:
+          path: configuration
+      - run: |
+          rm -rf configuration/.git  
+          cp -rv configuration/templates/* ../templates
       - name: Build installers
         working-directory: ./setup
         run: |
@@ -38,11 +44,8 @@ jobs:
           mkdir deploy
           mv traccar.run deploy
           mv traccar.xml deploy
-      - uses: actions/checkout@v4
-        with:
-          path: configuration
+      
       - run: | 
-          rm -rf configuration/.git  
           sed -i "s/\${SMTP_PASSWORD}/${{secrets.SMTP_PASSWORD}}/g" configuration/traccar.xml
           sed -i "s/\${SMTP_USER_NAME}/${{secrets.SMTP_USER_NAME}}/g" configuration/traccar.xml
           sed -i "s/\${MAIL_SMTP_FROM}/${{secrets.MAIL_SMTP_FROM}}/g" configuration/traccar.xml
