@@ -1,5 +1,5 @@
 name: Deploy
-on: 
+on:
   workflow_dispatch:
   push:
     branches: [ main ]
@@ -11,14 +11,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: 'traccar/traccar'
-          ref: 'master'      
+          ref: 'master'
       - uses: actions/checkout@v4
         with:
           path: configuration
       - name: update templates
         run: |
           rm -rf configuration/.git  
-          rsync -v configuration/templates/ ../templates/
+          cp -vr configuration/templates/* templates
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -45,7 +45,7 @@ jobs:
           mkdir deploy
           mv traccar.run deploy
           mv traccar.xml deploy
-      
+
       - run: | 
           sed -i "s/\${SMTP_PASSWORD}/${{secrets.SMTP_PASSWORD}}/g" configuration/traccar.xml
           sed -i "s/\${SMTP_USER_NAME}/${{secrets.SMTP_USER_NAME}}/g" configuration/traccar.xml
