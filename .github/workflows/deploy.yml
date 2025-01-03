@@ -23,7 +23,7 @@ jobs:
           path: configuration
       - run: |
           rm -rf configuration/.git  
-          cp -rv configuration/templates/* ../templates
+          rsync -r configuration/templates ../templates
       - name: Build installers
         working-directory: ./setup
         run: |
