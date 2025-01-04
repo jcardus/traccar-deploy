@@ -47,6 +47,7 @@
     <entry key="geolocation.key">${GEOLOCATION_KEY}</entry>
     <entry key="geolocation.type">unwired</entry>
     <entry key="geolocation.url">https://us1.unwiredlabs.com/v2/process</entry>
+    <entry key="geolocation.reuse">true</entry>
 
     <entry key="report.fastThreshold">864000</entry>
     <entry key="report.trip.useIgnition">true</entry>
