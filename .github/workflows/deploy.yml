@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: 'traccar/traccar'
+          repository: 'jcardus/traccar'
           ref: 'master'
       - uses: actions/checkout@v4
         with:
