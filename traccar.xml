@@ -21,7 +21,7 @@
     <entry key="web.url">https://dash.frotaweb.com/traccar</entry>
 
 
-    <entry key='notificator.types'>web,mail,sms,firebase</entry>
+    <entry key='notificator.types'>web,mail,sms,firebase,command</entry>
     <entry key='notificator.firebase.serviceAccount'>${NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT}</entry>
     <entry key='sms.http.url'>https://sendsms-tvq2s7swmq-uc.a.run.app</entry>
     <entry key='sms.http.authorization'>${SMS_HTTP_AUTHORIZATION}</entry>
