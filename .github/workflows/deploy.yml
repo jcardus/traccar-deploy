@@ -57,6 +57,7 @@ jobs:
           sed -i "s/\${GEOCODER_KEY}/${{secrets.GEOCODER_KEY}}/g" configuration/traccar.xml
           sed -i "s/\${GEOLOCATION_KEY}/${{secrets.GEOLOCATION_KEY}}/g" configuration/traccar.xml
           sed -i "s/\${OPEN_ID_CLIENT_SECRET}/${{secrets.OPEN_ID_CLIENT_SECRET}}/g" configuration/traccar.xml
+          sed -i "s/\${AUTH_DOMAIN}/${{vars.AUTH_DOMAIN}}/g" configuration/traccar.xml          
           sed -i "/\${NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT}/r /dev/stdin" configuration/traccar.xml <<'EOF'
           <entry key='notificator.firebase.serviceAccount'>${{ secrets.NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT }}</entry>
           EOF
