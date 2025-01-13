@@ -62,9 +62,9 @@
 
     <entry key="openid.clientId">91ttVQPxLQ3VrjZiH4XS9tBwJVI8wusb</entry>
     <entry key="openid.clientSecret">${OPEN_ID_CLIENT_SECRET}</entry>
-    <entry key="openid.authUrl">https://auth.frotaweb.com/authorize</entry>
-    <entry key="openid.tokenUrl">https://auth.frotaweb.com/token</entry>
-    <entry key="openid.userInfoUrl">https://auth.frotaweb.com/userInfo</entry>
+    <entry key="openid.authUrl">https://${AUTH_DOMAIN}/authorize</entry>
+    <entry key="openid.tokenUrl">https://${AUTH_DOMAIN}/oauth/token</entry>
+    <entry key="openid.userInfoUrl">https://${AUTH_DOMAIN}/userInfo</entry>
     
 
 </properties>
