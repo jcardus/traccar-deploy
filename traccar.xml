@@ -60,7 +60,7 @@
     <entry key="processing.copyAttributes.enable">true</entry>
     <entry key="processing.copyAttributes">blocked</entry>
 
-    <entry key="openid.clientId">piXJFmFYJ3Iz2k08bS0T9BeroBLHy7R4</entry>
+    <entry key="openid.clientId">91ttVQPxLQ3VrjZiH4XS9tBwJVI8wusb</entry>
     <entry key="openid.clientSecret">${OPEN_ID_CLIENT_SECRET}</entry>
     <entry key="openid.authUrl">https://auth.frotaweb.com/authorize</entry>
     <entry key="openid.tokenUrl">https://auth.frotaweb.com/token</entry>
