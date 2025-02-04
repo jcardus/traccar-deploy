@@ -44,7 +44,7 @@
     <entry key="geolocation.enable">true</entry>
     <entry key="geolocation.type">unwired</entry>
     <entry key="geolocation.processInvalidPositions">true</entry>
-    <entry key="geolocation.key">${GEOLOCATION_KEY}</entry>
+    <entry key="geolocation.key">${GEOLOCATION_KEY}</entry> <!-- joaquim.cardeira@tecnico.ulisboa.pt frotaweb-446822 -->
     <entry key="geolocation.type">google</entry>
     <entry key="geolocation.url">https://us1.unwiredlabs.com/v2/process</entry>
     <entry key="geolocation.reuse">true</entry>
