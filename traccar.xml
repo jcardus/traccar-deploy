@@ -68,6 +68,9 @@
     <entry key="openid.userInfoUrl">https://${AUTH_DOMAIN}/userInfo</entry>
 
     <entry key="decoder.timezone">GMT</entry>
+
+    <entry key="web.requestLog.path">./logs/jetty-yyyy_mm_dd.request.log</entry>
+    <entry key="web.requestLog.retainDays">10</entry>
     
 
 </properties>
