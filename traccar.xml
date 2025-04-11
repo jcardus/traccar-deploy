@@ -59,7 +59,7 @@
     <entry key="event.forward.type">json</entry>
 
     <entry key="processing.copyAttributes.enable">true</entry>
-    <entry key="processing.copyAttributes">blocked,driverUniqueId,ignition</entry>
+    <entry key="processing.copyAttributes">blocked,driverUniqueId,ignition,odometer</entry>
 
     <entry key="openid.clientId">91ttVQPxLQ3VrjZiH4XS9tBwJVI8wusb</entry>
     <entry key="openid.clientSecret">${OPEN_ID_CLIENT_SECRET}</entry>
