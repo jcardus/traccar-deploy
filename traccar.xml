@@ -34,7 +34,7 @@
     <entry key='geocoder.type'>mapbox</entry>
     <entry key='geocoder.key'>${GEOCODER_KEY}</entry>
     <entry key='geocoder.format'>%f</entry>
-    <entry key='geocoder.onRequest'>false</entry>
+    <entry key='geocoder.onRequest'>true</entry>
 
     <entry key='filter.zero'>true</entry>
     <entry key='filter.future'>300</entry>
