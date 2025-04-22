@@ -73,7 +73,7 @@ jobs:
           SOURCE: "setup/deploy"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.REMOTE_TARGET }}
+          TARGET: ${{ vars.REMOTE_TARGET }}
           SCRIPT_AFTER: |
             sudo /home/${{ secrets.REMOTE_USER }}/deploy/traccar.run
             sudo cp -v /home/${{ secrets.REMOTE_USER }}/deploy/traccar.xml /opt/traccar/conf/
