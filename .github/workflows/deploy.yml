@@ -71,9 +71,9 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-rlgoDzvc -i"
           SOURCE: "setup/deploy"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_HOST: ${{ vars.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ vars.REMOTE_TARGET }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
           SCRIPT_AFTER: |
             sudo /home/${{ secrets.REMOTE_USER }}/deploy/traccar.run
             sudo cp -v /home/${{ secrets.REMOTE_USER }}/deploy/traccar.xml /opt/traccar/conf/
