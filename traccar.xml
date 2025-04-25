@@ -31,8 +31,9 @@
     }
     </entry>
 
-    <entry key='geocoder.type'>mapbox</entry>
+    <entry key='geocoder.type'>nominatim</entry>
     <entry key='geocoder.key'>${GEOCODER_KEY}</entry>
+    <entry key='geocoder.url'>${GEOCODER_URL}</entry>
     <entry key='geocoder.format'>%f</entry>
     <entry key='geocoder.onRequest'>true</entry>
 
