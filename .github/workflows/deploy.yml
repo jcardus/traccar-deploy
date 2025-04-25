@@ -55,6 +55,7 @@ jobs:
           sed -i "s/\${DATABASE_USER}/${{secrets.DATABASE_USER}}/g" configuration/traccar.xml
           sed -i "s/\${SMS_HTTP_AUTHORIZATION}/${{secrets.SMS_HTTP_AUTHORIZATION}}/g" configuration/traccar.xml
           sed -i "s/\${GEOCODER_KEY}/${{secrets.GEOCODER_KEY}}/g" configuration/traccar.xml
+          sed -i "s/\${GEOCODER_URL}/${{secrets.GEOCODER_URL}}/g" configuration/traccar.xml
           sed -i "s/\${GEOLOCATION_KEY}/${{secrets.GEOLOCATION_KEY}}/g" configuration/traccar.xml
           sed -i "s/\${OPEN_ID_CLIENT_SECRET}/${{secrets.OPEN_ID_CLIENT_SECRET}}/g" configuration/traccar.xml
           sed -i "s/\${AUTH_DOMAIN}/${{vars.AUTH_DOMAIN}}/g" configuration/traccar.xml          
