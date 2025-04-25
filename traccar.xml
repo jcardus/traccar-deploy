@@ -36,6 +36,7 @@
     <entry key='geocoder.url'>http://178.156.172.139:8080/reverse</entry>
     <entry key='geocoder.format'>%f</entry>
     <entry key='geocoder.onRequest'>true</entry>
+    <entry key='geocoder.ignorePositions'>false</entry>
 
     <entry key='filter.zero'>true</entry>
     <entry key='filter.future'>300</entry>
