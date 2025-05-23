@@ -32,7 +32,7 @@
     </entry>
 
     <entry key='geocoder.type'>geocodejson</entry>
-    <entry key='geocoder.url'>http://5.161.125.168:4000/v1/reverse?point.lat=%f&amp;point.lon=%f&amp;size=1&amp;layers=address,street</entry>
+    <entry key='geocoder.url'>http://5.161.125.168:4000/v1/reverse?point.lat=%f&amp;point.lon=%f&amp;size=1&amp;layers=address,street,region,country</entry>
     <entry key='geocoder.format'>%f</entry>
     <entry key='geocoder.onRequest'>true</entry>
     <entry key='geocoder.ignorePositions'>false</entry>
