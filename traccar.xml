@@ -74,4 +74,6 @@
     <entry key="web.requestLog.path">./logs/jetty-yyyy_mm_dd.request.log</entry>
     <entry key="web.requestLog.retainDays">10</entry>
 
+    <entry key="protocols.enable">teltonika,osmand,gt06,huabao,upro,suntech,ruptela,mobilogix,h02,easytrack</entry>
+
 </properties>
