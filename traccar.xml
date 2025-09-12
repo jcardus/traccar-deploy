@@ -76,4 +76,6 @@
 
     <entry key="protocols.enable">teltonika,osmand,gt06,huabao,upro,suntech,ruptela,mobilogix,h02,easytrack</entry>
 
+    <entry key="server.timeout">120</entry>
+
 </properties>
