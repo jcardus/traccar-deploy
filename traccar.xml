@@ -8,7 +8,7 @@
     <entry key='database.url'>jdbc:postgresql://${DATABASE_HOST}/traccar?sslmode=require</entry>
     <entry key='database.user'>${DATABASE_USER}</entry>
     <entry key='database.password'>${DATABASE_PASSWORD}</entry>
-    <entry key='database.saveOriginal'>true</entry>
+    <entry key='database.saveOriginal'>false</entry>
     <entry key='database.changelog'></entry>
 
     <entry key='mail.smtp.host'>email-smtp.us-east-1.amazonaws.com</entry>
