@@ -32,8 +32,8 @@
     }
     </entry>
 
-    <entry key='geocoder.type'>geocodejson</entry>
-    <entry key='geocoder.url'>http://pelias.fleetmap.org:4000/v1/reverse?point.lat=%f&amp;point.lon=%f&amp;size=1</entry>
+    <entry key='geocoder.type'>nominatim</entry>
+    <entry key='geocoder.url'>http://localhost:3000/reverse</entry>
     <entry key='geocoder.format'>%f</entry>
     <entry key='geocoder.onRequest'>true</entry>
     <entry key='geocoder.ignorePositions'>false</entry>
