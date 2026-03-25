@@ -77,4 +77,9 @@
 
     <entry key="server.timeout">120</entry>
 
+    <entry key='report.trip.minimalTripDuration'>59</entry>
+    <entry key='report.trip.minimalTripDistance'>15</entry>
+    <entry key='report.trip.minimalParkingDuration'>150</entry>
+    <entry key='report.trip.useIgnition'>true</entry>
+
 </properties>
