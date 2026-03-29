@@ -15,9 +15,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Inject credentials into cloud-init
 USER_DATA=$(sed \
-  -e "s|\${DATABASE_URL}|${DATABASE_URL}|g" \
-  -e "s|\${DATABASE_USER}|${DATABASE_USER}|g" \
-  -e "s|\${DATABASE_PASSWORD}|${DATABASE_PASSWORD}|g" \
+  -e "s|\{DATABASE_URL}|{DATABASE_URL}|g" \
   "${SCRIPT_DIR}/cloud-init.yml")
 
 # Build hcloud command
