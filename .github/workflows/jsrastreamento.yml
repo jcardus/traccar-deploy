@@ -29,11 +29,7 @@ jobs:
       - name: Create server
         env:
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DATABASE_USER: ${{ secrets.DATABASE_USER }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           SERVER_NAME: ${{ github.event.inputs.server_name }}
           SERVER_TYPE: ${{ github.event.inputs.server_type }}
           LOCATION: ${{ github.event.inputs.location }}
-          SSH_KEY: ${{ secrets.HCLOUD_SSH_KEY }}
         run: bash hcloud-create.sh

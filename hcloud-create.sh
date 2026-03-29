@@ -3,9 +3,7 @@ set -euo pipefail
 
 # Required env vars — set these before running
 : "${HCLOUD_TOKEN:?}"
-: "${DATABASE_URL:?}"
-: "${DATABASE_USER:?}"
-: "${DATABASE_PASSWORD:?}"
+
 
 # Optional
 SERVER_NAME="${SERVER_NAME:-traccar}"
