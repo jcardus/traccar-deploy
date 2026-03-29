@@ -10,7 +10,7 @@ write_files:
       services:
 
         traccar:
-          image: traccar/traccar:latest
+          image: ghcr.io/jcardus/traccar:jsrastreamento
           restart: unless-stopped
           healthcheck:
             test: [ "CMD", "wget", "-q", "--spider", "http://localhost/api/health" ]
