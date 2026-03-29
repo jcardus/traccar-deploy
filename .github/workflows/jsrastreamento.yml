@@ -12,6 +12,9 @@ on:
       location:
         description: Hetzner location
         default: nbg1
+  push:
+    branches: [ jsrastreamento ]
+
 
 jobs:
   build-image:
