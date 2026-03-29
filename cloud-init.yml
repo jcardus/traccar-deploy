@@ -20,7 +20,7 @@ write_files:
             retries: 3
           ports:
             - "80:80"
-            - "5000-5500:5000-5500"
+            - "5000-9500:5000-9500"
           volumes:
             - /opt/traccar/traccar.xml:/opt/traccar/conf/traccar.xml:ro
             - /opt/traccar/logs:/opt/traccar/logs
