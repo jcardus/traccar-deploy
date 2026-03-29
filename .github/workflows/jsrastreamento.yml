@@ -47,7 +47,11 @@ jobs:
         working-directory: traccar-src/traccar-web
 
       - name: Install packaging tools
-        run: sudo apt-get install -y makeself
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install -y libgcc-s1:i386 libstdc++6:i386
+          sudo apt-get install -y innoextract makeself wine32
 
       - name: Download JDKs and package
         working-directory: traccar-src/setup
