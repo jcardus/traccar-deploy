@@ -8,7 +8,7 @@ on:
         default: traccar
       server_type:
         description: Hetzner server type
-        default: cx22
+        default: cx23
       location:
         description: Hetzner location
         default: nbg1
