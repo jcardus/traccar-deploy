@@ -18,9 +18,7 @@ write_files:
             timeout: 5s
             start_period: 1h
             retries: 3
-          ports:
-            - "80:80"
-            - "5000-9500:5000-9500"
+          network_mode: host
           volumes:
             - /opt/traccar/traccar.xml:/opt/traccar/conf/traccar.xml:ro
             - /opt/traccar/logs:/opt/traccar/logs
