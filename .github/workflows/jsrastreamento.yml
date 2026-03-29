@@ -32,4 +32,13 @@ jobs:
           SERVER_NAME: ${{ github.event.inputs.server_name }}
           SERVER_TYPE: ${{ github.event.inputs.server_type }}
           LOCATION: ${{ github.event.inputs.location }}
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          SMTP_USER_NAME: ${{ secrets.SMTP_USER_NAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_SMTP_FROM: ${{ secrets.MAIL_SMTP_FROM }}
+          NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT: ${{ secrets.NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT }}
+          SMS_HTTP_AUTHORIZATION: ${{ secrets.SMS_HTTP_AUTHORIZATION }}
+          GEOLOCATION_KEY: ${{ secrets.GEOLOCATION_KEY }}
         run: bash hcloud-create.sh
