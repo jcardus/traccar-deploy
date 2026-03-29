@@ -16,6 +16,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Inject credentials into cloud-init
 USERDATA_FILE=$(mktemp)
 trap 'rm -f "$USERDATA_FILE"' EXIT
+export TRACCAR_XML_B64
+TRACCAR_XML_B64=$(envsubst < "${SCRIPT_DIR}/traccar.xml" | base64 | tr -d '\n')
 envsubst < "${SCRIPT_DIR}/cloud-init.yml" > "$USERDATA_FILE"
 
 cat "$USERDATA_FILE"
