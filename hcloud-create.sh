@@ -16,8 +16,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Inject credentials into cloud-init
 USERDATA_FILE=$(mktemp)
 trap 'rm -f "$USERDATA_FILE"' EXIT
-cat "${SCRIPT_DIR}/cloud-init.yml" > "$USERDATA_FILE"
+envsubst < "${SCRIPT_DIR}/cloud-init.yml" > "$USERDATA_FILE"
 
+cat "$USERDATA_FILE"
 # Build hcloud command
 HCLOUD_ARGS=(
   server create
