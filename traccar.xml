@@ -52,7 +52,7 @@
     <entry key="report.fastThreshold">864000</entry>
     <entry key="report.trip.useIgnition">true</entry>
 
-    <entry key="sever.forward">jsrastreamento.stctecnologia.com.br</entry>
+    <entry key="server.forward">jsrastreamento.stctecnologia.com.br</entry>
 
     <entry key="processing.copyAttributes.enable">true</entry>
     <entry key="processing.copyAttributes">blocked,driverUniqueId,ignition,odometer,fuelUsed,power,batteryLevel</entry>
