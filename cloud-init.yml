@@ -81,7 +81,7 @@ write_files:
           image: traccar/traccar:latest
           restart: unless-stopped
           healthcheck:
-            test: [ "CMD", "wget", "-q", "--spider", "http://localhost:8082/api/health" ]
+            test: [ "CMD", "wget", "-q", "--spider", "http://localhost/api/health" ]
             interval: 2m
             timeout: 5s
             start_period: 1h
