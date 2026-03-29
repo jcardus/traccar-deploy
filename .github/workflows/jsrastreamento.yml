@@ -5,7 +5,7 @@ on:
     inputs:
       server_name:
         description: Server name
-        default: traccar
+        default: traccar-jsrastreamento
       server_type:
         description: Hetzner server type
         default: cx23
