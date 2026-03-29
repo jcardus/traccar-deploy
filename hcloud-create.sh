@@ -7,14 +7,16 @@ set -euo pipefail
 
 # Optional
 SERVER_NAME="${SERVER_NAME:-traccar}"
-SERVER_TYPE="${SERVER_TYPE:-cx22}"
+SERVER_TYPE="${SERVER_TYPE:-cx23}"
 LOCATION="${LOCATION:-nbg1}"
 SSH_KEY="${SSH_KEY:-}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Inject credentials into cloud-init
-USER_DATA=$("${SCRIPT_DIR}/cloud-init.yml")
+USERDATA_FILE=$(mktemp)
+trap 'rm -f "$USERDATA_FILE"' EXIT
+cat "${SCRIPT_DIR}/cloud-init.yml" > "$USERDATA_FILE"
 
 # Build hcloud command
 HCLOUD_ARGS=(
@@ -23,13 +25,14 @@ HCLOUD_ARGS=(
   --type "$SERVER_TYPE"
   --image "docker-ce"
   --location "$LOCATION"
-  --user-data-from-file <(echo "$USER_DATA")
+  --user-data-from-file "$USERDATA_FILE"
 )
 
 if [[ -n "$SSH_KEY" ]]; then
   HCLOUD_ARGS+=(--ssh-key "$SSH_KEY")
 fi
-
+echo "run"
+echo "${HCLOUD_ARGS[@]}"
 hcloud "${HCLOUD_ARGS[@]}"
 
 echo ""
