@@ -1,0 +1,39 @@
+name: Deploy Traccar
+
+on:
+  workflow_dispatch:
+    inputs:
+      server_name:
+        description: Server name
+        default: traccar
+      server_type:
+        description: Hetzner server type
+        default: cx22
+      location:
+        description: Hetzner location
+        default: nbg1
+
+jobs:
+  deploy:
+    name: Create Hetzner server
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install hcloud CLI
+        run: |
+          curl -fsSL https://github.com/hetznercloud/cli/releases/latest/download/hcloud-linux-amd64.tar.gz \
+            | tar -xz hcloud
+          sudo mv hcloud /usr/local/bin/
+
+      - name: Create server
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          SERVER_NAME: ${{ github.event.inputs.server_name }}
+          SERVER_TYPE: ${{ github.event.inputs.server_type }}
+          LOCATION: ${{ github.event.inputs.location }}
+          SSH_KEY: ${{ secrets.HCLOUD_SSH_KEY }}
+        run: bash deploy/hcloud-create.sh
