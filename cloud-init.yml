@@ -10,10 +10,6 @@ write_files:
           restart: unless-stopped
           environment:
             CONFIG_USE_ENVIRONMENT_VARIABLES: "true"
-            DATABASE_DRIVER: org.postgresql.Driver
-            DATABASE_URL: ${DATABASE_URL}
-            DATABASE_USER: ${DATABASE_USER}
-            DATABASE_PASSWORD: ${DATABASE_PASSWORD}
           healthcheck:
             test: [ "CMD", "wget", "-q", "--spider", "http://localhost:8082/api/health" ]
             interval: 2m
