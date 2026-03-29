@@ -100,7 +100,7 @@ jobs:
       - name: Create server
         env:
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
-          SERVER_NAME: ${{ github.event.inputs.server_name }}-${{ github.run_number }}
+          SERVER_NAME: traccar-jsrastreamento-${{ github.run_number }}
           SERVER_TYPE: ${{ github.event.inputs.server_type }}
           LOCATION: ${{ github.event.inputs.location }}
           DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
