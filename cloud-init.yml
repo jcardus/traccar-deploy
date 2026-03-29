@@ -19,7 +19,7 @@ write_files:
             start_period: 1h
             retries: 3
           ports:
-            - "8082:8082"
+            - "80:80"
             - "5000-5500:5000-5500"
           volumes:
             - /opt/traccar/traccar.xml:/opt/traccar/conf/traccar.xml:ro
