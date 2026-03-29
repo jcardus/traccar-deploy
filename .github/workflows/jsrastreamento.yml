@@ -1,4 +1,4 @@
-name: Deploy Traccar
+name: Deploy JSRastreamento
 
 on:
   workflow_dispatch:
@@ -36,4 +36,4 @@ jobs:
           SERVER_TYPE: ${{ github.event.inputs.server_type }}
           LOCATION: ${{ github.event.inputs.location }}
           SSH_KEY: ${{ secrets.HCLOUD_SSH_KEY }}
-        run: bash deploy/hcloud-create.sh
+        run: bash hcloud-create.sh
