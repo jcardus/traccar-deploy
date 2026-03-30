@@ -2,7 +2,6 @@
 <!DOCTYPE properties SYSTEM 'http://java.sun.com/dtd/properties.dtd'>
 <properties>
     <!-- Documentation: https://www.traccar.org/configuration-file/ -->
-
     <entry key='database.driver'>org.postgresql.Driver</entry>
     <entry key='database.url'>jdbc:postgresql://${DATABASE_HOST}/traccar?sslmode=require</entry>
     <entry key='database.user'>${DATABASE_USER}</entry>
@@ -40,14 +39,7 @@
 
     <entry key='web.persistSession'>true</entry>
     
-    <entry key="geolocation.enable">true</entry>
-    <entry key="geolocation.type">unwired</entry>
-    <entry key="geolocation.processInvalidPositions">true</entry>
-    <entry key="geolocation.key">${GEOLOCATION_KEY}</entry> <!-- joaquim.cardeira@tecnico.ulisboa.pt frotaweb-446822 -->
-    <entry key="geolocation.type">google</entry>
-    <entry key="geolocation.url">https://us1.unwiredlabs.com/v2/process</entry>
-    <entry key="geolocation.reuse">true</entry>
-    <entry key="geolocation.requireWifi">true</entry>
+    <entry key="geolocation.enable">false</entry>
 
     <entry key="report.fastThreshold">864000</entry>
     <entry key="report.trip.useIgnition">true</entry>
