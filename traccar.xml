@@ -36,7 +36,7 @@
 
     <entry key='filter.zero'>true</entry>
     <entry key='filter.future'>300</entry>
-    <entry key='filter.maxSpeed'>600</entry>
+    <entry key='filter.maxSpeed'>300</entry>
 
     <entry key='web.persistSession'>true</entry>
     
