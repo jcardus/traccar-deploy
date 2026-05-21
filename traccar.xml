@@ -68,4 +68,5 @@
     <entry key='report.trip.minimalParkingDuration'>150</entry>
     <entry key='report.trip.useIgnition'>true</entry>
     
+    
 </properties>
