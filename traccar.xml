@@ -39,7 +39,7 @@
     <entry key='filter.maxSpeed'>300</entry>
 
     <entry key='web.persistSession'>true</entry>
-    
+
     <entry key="geolocation.enable">false</entry>
 
     <entry key="report.fastThreshold">864000</entry>
@@ -66,6 +66,5 @@
     <entry key='report.trip.minimalTripDistance'>15</entry>
     <entry key='report.trip.minimalParkingDuration'>150</entry>
     <entry key='report.trip.useIgnition'>true</entry>
-    
-    
+
 </properties>
