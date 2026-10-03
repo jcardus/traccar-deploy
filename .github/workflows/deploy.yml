@@ -15,10 +15,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: configuration
+      - uses: actions/checkout@v4
+        with:
+          repository: 'jcardus/traccar-web'
+          path: traccar-web
+          sparse-checkout: src/resources/l10n
       - name: update templates
         run: |
-          rm -rf configuration/.git  
-          cp -vr configuration/templates/* templates
+          rm -rf configuration/.git
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -30,11 +34,12 @@ jobs:
         run: |
           sudo apt-get install makeself
           wget -q https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2+13/OpenJDK21U-jdk_x64_linux_hotspot_21.0.2_13.tar.gz
-          mkdir -p out/{conf,data,lib,logs,web,schema,templates}
+          mkdir -p out/{conf,data,lib,logs,web,schema,templates/translations}
           cp ../target/tracker-server.jar out
           cp ../target/lib/* out/lib
           cp ../schema/* out/schema
           cp -r ../templates/* out/templates
+          cp ../traccar-web/src/resources/l10n/* out/templates/translations
           cp traccar.xml out/conf
           cp setup.sh out
           cp traccar.service out
@@ -63,7 +68,6 @@ jobs:
           EOF
           sed -i "/\${NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT}/d" configuration/traccar.xml
           cp -rv configuration/* setup/deploy
-          cat configuration/traccar.xml
 
       - name: ssh deploy
         uses: easingthemes/ssh-deploy@main
