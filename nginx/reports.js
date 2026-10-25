@@ -5,8 +5,14 @@ function archive(r) {
     const values = qs.parse(r.variables.args || '', '&', '=', { maxKeys: 0 }).from;
     const from = Array.isArray(values) ? values[0] : values;
     const oldest = new Date();
-    oldest.setUTCDate(oldest.getUTCDate() - 7);
+    const weeks = parseInt(r.variables.database_retention_weeks || '2');
+    oldest.setUTCDate(oldest.getUTCDate() - weeks * 7);
     return from && new Date(from).getTime() < oldest.getTime() ? '1' : '0';
 }
 
-export default { archive };
+// Preserve the raw query and escaping while removing only the leading prefix.
+function upstreamUri(r) {
+    return r.variables.request_uri.replace(/^\/traccar\//, '/');
+}
+
+export default { archive, upstreamUri };

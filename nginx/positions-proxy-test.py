@@ -9,8 +9,10 @@ from urllib.parse import urlencode
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(200)
+        self.send_response(401 if "denied=1" in self.path else 200)
         self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "https://upstream.invalid")
+        self.send_header("Access-Control-Allow-Credentials", "false")
         self.end_headers()
         self.wfile.write(json.dumps({
             "backend": self.server.backend,
@@ -30,8 +32,8 @@ try:
         servers.append(server)
 
     now = datetime.now(timezone.utc)
-    old = (now - timedelta(days=8)).isoformat()
-    recent = (now - timedelta(days=6)).isoformat()
+    old = (now - timedelta(days=15)).isoformat()
+    recent = (now - timedelta(days=13)).isoformat()
     cases = [
         ("/api/positions", "traccar"),
         ("/api/positions?id=1&id=2", "traccar"),
@@ -46,21 +48,54 @@ try:
         ("/api/positions/123?" + urlencode({"from": old}), "traccar"),
         ("/api/reports/route?" + urlencode({"from": old}), "archive"),
     ]
+    cases += [
+        ("/api/positions?" + urlencode({"from": (now - timedelta(days=10)).isoformat()}), "traccar"),
+        ("/api/reports/route?" + urlencode({"from": recent}), "traccar"),
+    ]
+    count = 0
     for origin in ["http://127.0.0.1", "http://[::1]"]:
         for path, expected in cases:
-            response = json.loads(subprocess.check_output([
-                "curl", "--noproxy", "*", "--fail", "--silent", "--show-error",
-                "-H", "Host: alternate.example",
-                "-H", "Authorization: Bearer ci-test",
-                "-H", "Cookie: JSESSIONID=ci-test",
-                "-H", "Accept: application/json", origin + path,
-            ], text=True))
-            assert response == {
-                "backend": expected, "uri": path,
-                "authorization": "Bearer ci-test",
-                "cookie": "JSESSIONID=ci-test", "accept": "application/json",
-            }, (origin, path, response)
-    print("Passed 20 proxy checks for positions and reports.")
+            # Prefix support applies to the same paths as archive routing.
+            prefixed_paths = [path]
+            if "/positions/" not in path:
+                prefixed_paths.append("/traccar" + path)
+            for incoming_path in prefixed_paths:
+                for cors_origin in [None, "https://dash.example"]:
+                    args = [
+                        "curl", "--noproxy", "*", "--silent", "--show-error",
+                        "--include", "-H", "Host: alternate.example",
+                        "-H", "Authorization: Bearer ci-test",
+                        "-H", "Cookie: JSESSIONID=ci-test",
+                        "-H", "Accept: application/json",
+                    ]
+                    if cors_origin:
+                        args += ["-H", "Origin: " + cors_origin]
+                    raw = subprocess.check_output(args + [origin + incoming_path], text=True)
+                    head, body = raw.split("\n\n", 1)
+                    assert "200 OK" in head, raw
+                    headers = {}
+                    for line in head.splitlines()[1:]:
+                        key, value = line.split(":", 1)
+                        headers.setdefault(key.lower(), []).append(value.strip())
+                    assert headers["access-control-allow-origin"] == [cors_origin or "*"], head
+                    assert headers["access-control-allow-credentials"] == ["true"], head
+                    assert "Origin" in headers["vary"], head
+                    assert json.loads(body) == {
+                        "backend": expected, "uri": path,
+                        "authorization": "Bearer ci-test",
+                        "cookie": "JSESSIONID=ci-test", "accept": "application/json",
+                    }, (origin, incoming_path, body)
+                    count += 1
+        for path in ["/api/positions?denied=1", "/traccar/api/reports/route?denied=1"]:
+            raw = subprocess.check_output([
+                "curl", "--noproxy", "*", "--silent", "--show-error", "--include",
+                "-H", "Origin: https://dash.example", origin + path,
+            ], text=True)
+            assert "401 Unauthorized" in raw, raw
+            assert "Access-Control-Allow-Origin: https://dash.example" in raw, raw
+            assert "Access-Control-Allow-Credentials: true" in raw, raw
+            count += 1
+    print("Passed", count, "proxy checks for positions, reports, prefixes and CORS.")
 finally:
     for server in servers:
         server.shutdown()
