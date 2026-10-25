@@ -21,6 +21,11 @@ policy_created=false
 install -d /etc/nginx/njs
 install -m 644 "$deployment_dir/nginx/reports.js" /etc/nginx/njs/reports.js
 install -m 644 "$deployment_dir/nginx/traccar.conf" /etc/nginx/conf.d/traccar.conf
+# Disable only the packaged default-site symlink; preserve its source file.
+if [ -L /etc/nginx/sites-enabled/default ] &&
+    [ "$(readlink -f /etc/nginx/sites-enabled/default)" = /etc/nginx/sites-available/default ]; then
+    unlink /etc/nginx/sites-enabled/default
+fi
 # Test before changing the running Traccar listener.
 nginx -t
 install -m 644 "$deployment_dir/traccar.xml" /opt/traccar/conf/traccar.xml

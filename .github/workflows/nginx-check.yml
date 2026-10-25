@@ -22,4 +22,22 @@ jobs:
           sudo install -d /etc/nginx/njs
           sudo install -m 644 nginx/reports.js /etc/nginx/njs/reports.js
           sudo install -m 644 nginx/traccar.conf /etc/nginx/conf.d/traccar.conf
+          sudo rm -f /etc/nginx/sites-enabled/default
           sudo nginx -t
+      - name: Verify session POST routing for alternate hosts
+        run: |
+          python3 nginx/session-proxy-test.py &
+          backend_pid=$!
+          trap 'kill "$backend_pid"' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8082/api/health > /dev/null; then break; fi
+            sleep 1
+          done
+          sudo systemctl restart nginx
+          for origin in http://127.0.0.1 'http://[::1]'; do
+            for host in gps.frotaweb.com dash.frotaweb.com alternate.example; do
+              curl --noproxy '*' --fail --silent --show-error \
+                -H "Host: $host" --data 'email=test&password=test' \
+                "$origin/api/session" | python3 -c 'import json,sys; assert json.load(sys.stdin)["proxied"] is True'
+            done
+          done
