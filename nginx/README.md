@@ -24,11 +24,10 @@ uses TRACCAR_REPORTS_SERVER, substitute its value before deploying.
 
 Both /api/... and /traccar/api/... forms are accepted for reports and positions.
 The leading /traccar/ prefix is removed before proxying, while the raw query,
-body and authentication headers are preserved. Responses reflect the request
-Origin (or * when absent) and set Access-Control-Allow-Credentials: true,
-including error responses. Upstream CORS values are replaced to prevent
-duplicate headers; Vary: Origin is added for caches. OPTIONS requests are
-proxied, matching the corrected function rather than the earlier redirect code. Lambda uses its own Host/SNI and verified HTTPS. The regular proxy
+body and authentication headers are preserved. No CORS headers are added or
+modified by nginx; the dashboard uses its same-origin API proxy. OPTIONS
+requests are proxied normally. Lambda uses its own Host/SNI and verified HTTPS.
+The regular proxy
 also forwards WebSocket upgrades for /api/socket. Adjust the DNS resolver and
 CA bundle path if the server requires different values.
 

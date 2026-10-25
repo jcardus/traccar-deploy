@@ -11,8 +11,6 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(401 if "denied=1" in self.path else 200)
         self.send_header("Content-Type", "application/json")
-        self.send_header("Access-Control-Allow-Origin", "https://upstream.invalid")
-        self.send_header("Access-Control-Allow-Credentials", "false")
         self.end_headers()
         self.wfile.write(json.dumps({
             "backend": self.server.backend,
@@ -60,7 +58,7 @@ try:
             if "/positions/" not in path:
                 prefixed_paths.append("/traccar" + path)
             for incoming_path in prefixed_paths:
-                for cors_origin in [None, "https://dash.example"]:
+                for request_origin in [None, "https://dash.example"]:
                     args = [
                         "curl", "--noproxy", "*", "--silent", "--show-error",
                         "--include", "-H", "Host: alternate.example",
@@ -68,8 +66,8 @@ try:
                         "-H", "Cookie: JSESSIONID=ci-test",
                         "-H", "Accept: application/json",
                     ]
-                    if cors_origin:
-                        args += ["-H", "Origin: " + cors_origin]
+                    if request_origin:
+                        args += ["-H", "Origin: " + request_origin]
                     raw = subprocess.check_output(args + [origin + incoming_path], text=True)
                     head, body = raw.split("\n\n", 1)
                     assert "200 OK" in head, raw
@@ -77,14 +75,9 @@ try:
                     for line in head.splitlines()[1:]:
                         key, value = line.split(":", 1)
                         headers.setdefault(key.lower(), []).append(value.strip())
-                    if "/positions/" in path:
-                        # Subpaths bypass archive/CORS handling and preserve upstream headers.
-                        assert headers["access-control-allow-origin"] == ["https://upstream.invalid"], head
-                        assert headers["access-control-allow-credentials"] == ["false"], head
-                    else:
-                        assert headers["access-control-allow-origin"] == [cors_origin or "*"], head
-                        assert headers["access-control-allow-credentials"] == ["true"], head
-                        assert "Origin" in headers["vary"], head
+                    assert "access-control-allow-origin" not in headers, head
+                    assert "access-control-allow-credentials" not in headers, head
+                    assert "vary" not in headers, head
                     assert json.loads(body) == {
                         "backend": expected, "uri": path,
                         "authorization": "Bearer ci-test",
@@ -97,10 +90,10 @@ try:
                 "-H", "Origin: https://dash.example", origin + path,
             ], text=True)
             assert "401 Unauthorized" in raw, raw
-            assert "Access-Control-Allow-Origin: https://dash.example" in raw, raw
-            assert "Access-Control-Allow-Credentials: true" in raw, raw
+            assert "Access-Control-Allow-Origin:" not in raw, raw
+            assert "Access-Control-Allow-Credentials:" not in raw, raw
             count += 1
-    print("Passed", count, "proxy checks for positions, reports, prefixes and CORS.")
+    print("Passed", count, "proxy checks for positions, reports, prefixes and response headers.")
 finally:
     for server in servers:
         server.shutdown()
