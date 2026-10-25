@@ -30,8 +30,8 @@ try:
         servers.append(server)
 
     now = datetime.now(timezone.utc)
-    old = (now - timedelta(days=15)).isoformat()
-    recent = (now - timedelta(days=13)).isoformat()
+    old = (now - timedelta(days=8)).isoformat()
+    recent = (now - timedelta(days=6)).isoformat()
     cases = [
         ("/api/positions", "traccar"),
         ("/api/positions?id=1&id=2", "traccar"),
@@ -47,7 +47,7 @@ try:
         ("/api/reports/route?" + urlencode({"from": old}), "archive"),
     ]
     cases += [
-        ("/api/positions?" + urlencode({"from": (now - timedelta(days=10)).isoformat()}), "traccar"),
+        ("/api/positions?" + urlencode({"from": (now - timedelta(days=10)).isoformat()}), "archive"),
         ("/api/reports/route?" + urlencode({"from": recent}), "traccar"),
     ]
     count = 0

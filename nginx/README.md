@@ -10,12 +10,10 @@ sites-enabled/default symlink and preserves its source file. Other sites are
 preserved; custom default_server listeners must be resolved before deployment. The Docker cloud-init path is separate and is unchanged.
 
 Requests to `/api/reports/<report>` and `/api/positions` whose first decoded
-`from` value is strictly older than the configured retention period go
+`from` value is strictly older than seven days go
 to the configured Lambda URL; all other requests go to the local Traccar.
-Both paths use `set $database_retention_weeks 2;` in traccar.conf, equivalent
-to the function's DATABASE_RETENTION_WEEKS default of two weeks. Change that
-value to configure retention for both paths. Exactly at the cutoff stays local.
-The cutoff uses UTC to match the edge runtime. Missing, empty and invalid
+Both paths share the original fixed seven-day cutoff. Exactly at the cutoff
+stays local. The cutoff uses UTC to match the edge runtime. Missing, empty and invalid
 dates stay local; a range crossing the cutoff goes entirely to Lambda.
 Live positions and lookups by `id` without `from` stay on Traccar. The exact
 `/api/positions` path uses this rule; position subpaths keep normal proxying.
