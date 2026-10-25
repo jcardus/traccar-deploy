@@ -11,7 +11,7 @@ class FixedDate extends Date {
 }
 const source = fs.readFileSync(__dirname + '/reports.js', 'utf8')
     .replace("import qs from 'querystring';", '')
-    .replace('export default { archive, upstreamUri };', 'globalThis.archive = archive; globalThis.upstreamUri = upstreamUri;');
+    .replace('export default { archive };', 'globalThis.archive = archive;');
 const context = vm.createContext({ Date: FixedDate, qs });
 vm.runInContext(source, context);
 const cases = [
@@ -40,12 +40,4 @@ test('default two weeks keeps ten-day-old requests local', () => {
 });
 test('configured three weeks keeps twenty-day-old requests local', () => {
     assert.equal(context.archive({variables: {args: 'from=2026-10-05', database_retention_weeks: '3'}}), '0');
-});
-test('prefix removal preserves encoded query and repeated arguments', () => {
-    assert.equal(context.upstreamUri({variables: {request_uri: '/traccar/api/positions?from=a%2Bb&id=1&id=2'}}),
-        '/api/positions?from=a%2Bb&id=1&id=2');
-});
-test('unprefixed path and query remain unchanged', () => {
-    assert.equal(context.upstreamUri({variables: {request_uri: '/api/reports/route?value=/traccar/'}}),
-        '/api/reports/route?value=/traccar/');
 });

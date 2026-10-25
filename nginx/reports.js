@@ -10,9 +10,4 @@ function archive(r) {
     return from && new Date(from).getTime() < oldest.getTime() ? '1' : '0';
 }
 
-// Preserve the raw query and escaping while removing only the leading prefix.
-function upstreamUri(r) {
-    return r.variables.request_uri.replace(/^\/traccar\//, '/');
-}
-
-export default { archive, upstreamUri };
+export default { archive };

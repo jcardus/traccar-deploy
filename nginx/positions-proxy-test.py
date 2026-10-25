@@ -53,38 +53,33 @@ try:
     count = 0
     for origin in ["http://127.0.0.1", "http://[::1]"]:
         for path, expected in cases:
-            # Prefix support applies to the same paths as archive routing.
-            prefixed_paths = [path]
-            if "/positions/" not in path:
-                prefixed_paths.append("/traccar" + path)
-            for incoming_path in prefixed_paths:
-                for request_origin in [None, "https://dash.example"]:
-                    args = [
-                        "curl", "--noproxy", "*", "--silent", "--show-error",
-                        "--include", "-H", "Host: alternate.example",
-                        "-H", "Authorization: Bearer ci-test",
-                        "-H", "Cookie: JSESSIONID=ci-test",
-                        "-H", "Accept: application/json",
-                    ]
-                    if request_origin:
-                        args += ["-H", "Origin: " + request_origin]
-                    raw = subprocess.check_output(args + [origin + incoming_path], text=True)
-                    head, body = raw.split("\n\n", 1)
-                    assert "200 OK" in head, raw
-                    headers = {}
-                    for line in head.splitlines()[1:]:
-                        key, value = line.split(":", 1)
-                        headers.setdefault(key.lower(), []).append(value.strip())
-                    assert "access-control-allow-origin" not in headers, head
-                    assert "access-control-allow-credentials" not in headers, head
-                    assert "vary" not in headers, head
-                    assert json.loads(body) == {
-                        "backend": expected, "uri": path,
-                        "authorization": "Bearer ci-test",
-                        "cookie": "JSESSIONID=ci-test", "accept": "application/json",
-                    }, (origin, incoming_path, body)
-                    count += 1
-        for path in ["/api/positions?denied=1", "/traccar/api/reports/route?denied=1"]:
+            for request_origin in [None, "https://dash.example"]:
+                args = [
+                    "curl", "--noproxy", "*", "--silent", "--show-error",
+                    "--include", "-H", "Host: alternate.example",
+                    "-H", "Authorization: Bearer ci-test",
+                    "-H", "Cookie: JSESSIONID=ci-test",
+                    "-H", "Accept: application/json",
+                ]
+                if request_origin:
+                    args += ["-H", "Origin: " + request_origin]
+                raw = subprocess.check_output(args + [origin + path], text=True)
+                head, body = raw.split("\n\n", 1)
+                assert "200 OK" in head, raw
+                headers = {}
+                for line in head.splitlines()[1:]:
+                    key, value = line.split(":", 1)
+                    headers.setdefault(key.lower(), []).append(value.strip())
+                assert "access-control-allow-origin" not in headers, head
+                assert "access-control-allow-credentials" not in headers, head
+                assert "vary" not in headers, head
+                assert json.loads(body) == {
+                    "backend": expected, "uri": path,
+                    "authorization": "Bearer ci-test",
+                    "cookie": "JSESSIONID=ci-test", "accept": "application/json",
+                }, (origin, path, body)
+                count += 1
+        for path in ["/api/positions?denied=1", "/api/reports/route?denied=1"]:
             raw = subprocess.check_output([
                 "curl", "--noproxy", "*", "--silent", "--show-error", "--include",
                 "-H", "Origin: https://dash.example", origin + path,
@@ -93,7 +88,7 @@ try:
             assert "Access-Control-Allow-Origin:" not in raw, raw
             assert "Access-Control-Allow-Credentials:" not in raw, raw
             count += 1
-    print("Passed", count, "proxy checks for positions, reports, prefixes and response headers.")
+    print("Passed", count, "proxy checks for positions, reports, response headers.")
 finally:
     for server in servers:
         server.shutdown()

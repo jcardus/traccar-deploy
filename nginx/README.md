@@ -22,13 +22,11 @@ Live positions and lookups by `id` without `from` stay on Traccar. The exact
 Both maps in traccar.conf must use the same archive hostname. If the dashboard
 uses TRACCAR_REPORTS_SERVER, substitute its value before deploying.
 
-Both /api/... and /traccar/api/... forms are accepted for reports and positions.
-The leading /traccar/ prefix is removed before proxying, while the raw query,
-body and authentication headers are preserved. No CORS headers are added or
+The original /api/... path, raw query, body and authentication headers are
+preserved when proxying reports and positions. No CORS headers are added or
 modified by nginx; the dashboard uses its same-origin API proxy. OPTIONS
 requests are proxied normally. Lambda uses its own Host/SNI and verified HTTPS.
-The regular proxy
-also forwards WebSocket upgrades for /api/socket. Adjust the DNS resolver and
+The regular proxy also forwards WebSocket upgrades for /api/socket. Adjust the DNS resolver and
 CA bundle path if the server requires different values.
 
 After deployment, verify recent and archived authenticated reports, exports,
