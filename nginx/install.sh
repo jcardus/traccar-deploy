@@ -14,7 +14,6 @@ if [ ! -e /usr/sbin/policy-rc.d ]; then
     chmod 755 /usr/sbin/policy-rc.d
     policy_created=true
 fi
-apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install -y nginx libnginx-mod-http-js ca-certificates curl
 cleanup
 policy_created=false
