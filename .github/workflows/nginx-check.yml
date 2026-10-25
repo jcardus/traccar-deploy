@@ -1,0 +1,25 @@
+name: Check nginx report routing
+on:
+  pull_request:
+    branches: [ entrack ]
+  push:
+    branches: [ entrack ]
+    paths: [ 'nginx/**', '.github/workflows/nginx-check.yml' ]
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test nginx/reports.test.cjs
+      - run: bash -n nginx/install.sh
+      - name: Validate nginx with its JavaScript module
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nginx libnginx-mod-http-js ca-certificates
+          sudo install -d /etc/nginx/njs
+          sudo install -m 644 nginx/reports.js /etc/nginx/njs/reports.js
+          sudo install -m 644 nginx/traccar.conf /etc/nginx/conf.d/traccar.conf
+          sudo nginx -t
