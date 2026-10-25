@@ -46,5 +46,5 @@ jobs:
           # Use a local archive stand-in; never call Lambda with CI requests.
           sudo sed -i 's@https://aadobrygc6wsyawaleatkimjjm0cczwu.lambda-url.us-east-1.on.aws@http://127.0.0.1:8083@g' /etc/nginx/conf.d/traccar.conf
           sudo nginx -t
-          sudo systemctl reload nginx
+          sudo systemctl restart nginx
           python3 nginx/positions-proxy-test.py
