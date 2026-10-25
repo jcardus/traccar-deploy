@@ -77,9 +77,14 @@ try:
                     for line in head.splitlines()[1:]:
                         key, value = line.split(":", 1)
                         headers.setdefault(key.lower(), []).append(value.strip())
-                    assert headers["access-control-allow-origin"] == [cors_origin or "*"], head
-                    assert headers["access-control-allow-credentials"] == ["true"], head
-                    assert "Origin" in headers["vary"], head
+                    if "/positions/" in path:
+                        # Subpaths bypass archive/CORS handling and preserve upstream headers.
+                        assert headers["access-control-allow-origin"] == ["https://upstream.invalid"], head
+                        assert headers["access-control-allow-credentials"] == ["false"], head
+                    else:
+                        assert headers["access-control-allow-origin"] == [cors_origin or "*"], head
+                        assert headers["access-control-allow-credentials"] == ["true"], head
+                        assert "Origin" in headers["vary"], head
                     assert json.loads(body) == {
                         "backend": expected, "uri": path,
                         "authorization": "Bearer ci-test",
