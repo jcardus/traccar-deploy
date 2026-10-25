@@ -1,4 +1,4 @@
-# Report routing on entrack
+# Report and position routing on entrack
 
 The existing SSH deployment installs nginx and its JavaScript module, validates
 the configuration, then restarts Traccar on 127.0.0.1:8082 and starts/reloads
@@ -9,10 +9,13 @@ alternate Host header also reach the API. The installer disables the packaged
 sites-enabled/default symlink and preserves its source file. Other sites are
 preserved; custom default_server listeners must be resolved before deployment. The Docker cloud-init path is separate and is unchanged.
 
-Reports whose first decoded `from` value is strictly older than seven days go
+Requests to `/api/reports/<report>` and `/api/positions` whose first decoded
+`from` value is strictly older than seven days go
 to the configured Lambda URL; all other requests go to the local Traccar.
 The cutoff uses UTC to match the edge runtime. Missing, empty and invalid
 dates stay local; a range crossing the cutoff goes entirely to Lambda.
+Live positions and lookups by `id` without `from` stay on Traccar. The exact
+`/api/positions` path uses this rule; position subpaths keep normal proxying.
 Both maps in traccar.conf must use the same archive hostname. If the dashboard
 uses TRACCAR_REPORTS_SERVER, substitute its value before deploying.
 

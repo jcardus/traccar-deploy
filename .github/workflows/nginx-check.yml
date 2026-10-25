@@ -41,3 +41,10 @@ jobs:
                 "$origin/api/session" | python3 -c 'import json,sys; assert json.load(sys.stdin)["proxied"] is True'
             done
           done
+      - name: Verify position archive routing and forwarded headers
+        run: |
+          # Use a local archive stand-in; never call Lambda with CI requests.
+          sudo sed -i 's@https://aadobrygc6wsyawaleatkimjjm0cczwu.lambda-url.us-east-1.on.aws@http://127.0.0.1:8083@g' /etc/nginx/conf.d/traccar.conf
+          sudo nginx -t
+          sudo systemctl reload nginx
+          python3 nginx/positions-proxy-test.py
