@@ -112,4 +112,6 @@ jobs:
           NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT: ${{ secrets.NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT }}
           SMS_HTTP_AUTHORIZATION: ${{ secrets.SMS_HTTP_AUTHORIZATION }}
           GEOLOCATION_KEY: ${{ secrets.GEOLOCATION_KEY }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: bash hcloud-create.sh

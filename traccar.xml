@@ -21,6 +21,10 @@
     <entry key='notificator.firebase.serviceAccount'>${NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT}</entry>
     <entry key='sms.http.url'>https://sendsms-tvq2s7swmq-uc.a.run.app</entry>
     <entry key='sms.http.authorization'>${SMS_HTTP_AUTHORIZATION}</entry>
+    <!-- alarm clips: on every live G40 alarm Traccar asks the camera to FTP a clip to the media server -->
+    <entry key='huabao.clip.server'>media-ip.n-gps.com</entry>
+    <entry key='huabao.clip.username'>${FTP_USERNAME}</entry>
+    <entry key='huabao.clip.password'>${FTP_PASSWORD}</entry>
     <entry key='sms.http.template'>
     {
         "phone": "{phone}",
