@@ -3,18 +3,34 @@ name: Deploy JSRastreamento
 on:
   workflow_dispatch:
     inputs:
+      action:
+        description: create = new Hetzner server, update = existing server
+        type: choice
+        options:
+          - update
+          - create
+        default: update
+      remote_host:
+        description: Existing server hostname or IP (update only)
+        default: gps.jsrastreamento.com
+      remote_user:
+        description: SSH user (update only)
+        default: root
+      refresh_config:
+        description: Also refresh /opt/traccar/traccar.xml (update only)
+        type: boolean
+        default: false
       server_name:
-        description: Server name
+        description: New server name prefix (create only)
         default: traccar-jsrastreamento
       server_type:
-        description: Hetzner server type
+        description: Hetzner server type (create only)
         default: cx23
       location:
-        description: Hetzner location
+        description: Hetzner location (create only)
         default: nbg1
   push:
     branches: [ jsrastreamento ]
-
 
 jobs:
   build-image:
@@ -84,9 +100,71 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  deploy:
+  update:
+    name: Update existing server
+    needs: build-image
+    if: ${{ github.event_name == 'push' || github.event.inputs.action == 'update' }}
+    runs-on: ubuntu-latest
+    env:
+      REMOTE_HOST: ${{ github.event.inputs.remote_host || 'gps.jsrastreamento.com' }}
+      REMOTE_USER: ${{ github.event.inputs.remote_user || 'root' }}
+      REFRESH_CONFIG: ${{ github.event.inputs.refresh_config || 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare traccar.xml
+        if: env.REFRESH_CONFIG == 'true'
+        env:
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          SMTP_USER_NAME: ${{ secrets.SMTP_USER_NAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_SMTP_FROM: ${{ secrets.MAIL_SMTP_FROM }}
+          NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT: ${{ secrets.NOTIFICATOR_FIREBASE_SERVICE_ACCOUNT }}
+          SMS_HTTP_AUTHORIZATION: ${{ secrets.SMS_HTTP_AUTHORIZATION }}
+          GEOLOCATION_KEY: ${{ secrets.GEOLOCATION_KEY }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          envsubst < traccar.xml > traccar.xml.rendered
+
+      - name: Copy traccar.xml to server
+        if: env.REFRESH_CONFIG == 'true'
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: traccar.xml.rendered
+          target: /opt/traccar/
+          overwrite: true
+
+      - name: Pull image and restart
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -euo pipefail
+            cd /opt/traccar
+
+            if [ "${{ env.REFRESH_CONFIG }}" = "true" ]; then
+              mv -f traccar.xml.rendered traccar.xml
+            fi
+
+            docker compose pull traccar
+            docker compose up -d --force-recreate traccar
+            docker compose ps
+            sleep 5
+            curl -sf http://127.0.0.1/api/health
+            echo "Updated ${{ env.REMOTE_HOST }} successfully"
+
+  create:
     name: Create Hetzner server
     needs: build-image
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'create' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -100,9 +178,9 @@ jobs:
       - name: Create server
         env:
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
-          SERVER_NAME: traccar-jsrastreamento-${{ github.run_number }}
-          SERVER_TYPE: ${{ github.event.inputs.server_type }}
-          LOCATION: ${{ github.event.inputs.location }}
+          SERVER_NAME: ${{ github.event.inputs.server_name || 'traccar-jsrastreamento' }}-${{ github.run_number }}
+          SERVER_TYPE: ${{ github.event.inputs.server_type || 'cx23' }}
+          LOCATION: ${{ github.event.inputs.location || 'nbg1' }}
           DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
           DATABASE_USER: ${{ secrets.DATABASE_USER }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
